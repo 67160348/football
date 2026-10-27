@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Draft Derby — จัดทีมแข่งกัน</title><link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="#" aria-label="Draft Derby home"><span class="brand-ball">⚽</span><span>DRAFT <b>DERBY</b><small>สุ่มนักเตะ • จัดแผน • ดวลกัน</small></span></a>
+  <nav><button class="nav-btn active" data-page="builder">จัดทีม</button><button class="nav-btn" data-page="wheel">วงล้อสุ่ม</button></nav>
+</header>
+<main>
+<section id="builder" class="page active">
+  <div class="hero"><div><div class="eyebrow">YOUR CLUB. YOUR TACTICS.</div><h1>สร้างทีมในฝัน<br><em>แล้วไปดวลกัน</em></h1><p>เลือกแผน วางนักเตะ แล้วเซฟทีมของคุณก่อนส่งต่อให้คู่แข่ง</p></div><div class="hero-ball">⚽</div></div>
+  <div class="steps"><span class="step current">01 <b>จัดทีม</b></span><i></i><span class="step">02 <b>บันทึกทีม</b></span><i></i><span class="step">03 <b>วิเคราะห์แมตช์</b></span></div>
+  <div class="panel">
+    <div class="panel-head"><div><div class="eyebrow">TEAM SETUP</div><h2>ตั้งค่าทีมของคุณ</h2></div><span class="pill">ผู้เล่น <span id="playerNumber">1</span> / 2</span></div>
+    <div class="form-grid"><label>ชื่อผู้เล่น<input id="managerName" placeholder="เช่น หมิง / กาย" maxlength="24"></label><label>ชื่อทีม<input id="teamName" placeholder="เช่น Red Devils" maxlength="32"></label><label>เลือกแผนการเล่น<select id="formation"></select></label></div>
+    <div class="pitch-wrap"><div class="pitch-title"><span>สนามของคุณ</span><span id="formationLabel">4-3-3</span></div><div id="pitch" class="pitch"></div></div>
+    <div class="action-row"><button id="clearTeam" class="btn ghost">ล้างตำแหน่ง</button><button id="saveTeam" class="btn primary">บันทึกทีมผู้เล่น 1 →</button></div>
+    <div id="saveStatus" class="status" aria-live="polite"></div>
+  </div>
+  <div class="panel saved-panel"><div class="panel-head"><div><div class="eyebrow">SAVED SQUADS</div><h2>ทีมที่บันทึกไว้</h2></div><button class="btn ghost small" id="resetGame">เริ่มเกมใหม่</button></div><div id="savedTeams" class="saved-teams"><div class="empty">ยังไม่มีทีมที่บันทึกไว้ เริ่มจัดทีมแรกกันเลย</div></div>
+    <div id="matchArea" class="match-area hidden"><div class="eyebrow">MATCH PREVIEW</div><h2>ให้ซีช่วยวิเคราะห์แมตช์นี้</h2><p>ระบบจะประเมินจากแผน ตำแหน่ง และรายชื่อนักเตะที่ใส่ไว้ เป็นการจำลองเพื่อความสนุก ไม่ใช่ผลการแข่งขันจริง</p><button id="analyze" class="btn primary">⚡ วิเคราะห์สองทีม</button><div id="analysisResult"></div></div>
+  </div>
+</section>
+<section id="wheel" class="page">
+  <div class="hero wheel-hero"><div><div class="eyebrow">PLAYER PICKER • UP TO 120</div><h1>วงล้อสุ่มนักเตะ<br><em>โชคอยู่ข้างใคร?</em></h1><p>เพิ่มรายชื่อได้สูงสุด 120 คน สุ่มแล้วเก็บชื่อไว้ หรือลบออกจากวงล้อได้</p></div><div class="hero-ball">🎯</div></div>
+  <div class="wheel-layout">
+    <div class="panel wheel-panel"><div class="panel-head"><div><div class="eyebrow">SPIN THE WHEEL</div><h2>วงล้อของเรา</h2></div><span id="countPill" class="pill">0 / 120 คน</span></div>
+      <div class="wheel-stage"><canvas id="wheelCanvas" width="500" height="500" aria-label="วงล้อสุ่มชื่อ"></canvas><div class="pointer">▼</div></div>
+      <div id="winner" class="winner">ใส่ชื่อนักเตะ แล้วกดหมุนเลย!</div><button id="spin" class="btn primary spin-btn" disabled>หมุนวงล้อ</button>
+      <div class="winner-actions"><button id="keepWinner" class="btn ghost" disabled>เก็บชื่อที่สุ่มได้</button><button id="removeWinner" class="btn danger-outline" disabled>ลบชื่อออกจากวงล้อ</button></div>
+    </div>
+    <div class="panel roster-panel"><div class="eyebrow">PLAYER POOL</div><h2>รายชื่อนักเตะ</h2><p class="muted">ใส่ชื่อทีละบรรทัดหรือคั่นด้วยจุลภาคได้เลย</p><textarea id="playerInput" rows="7" placeholder="Cristiano Ronaldo&#10;Lionel Messi&#10;Kylian Mbappé&#10;Erling Haaland"></textarea>
+      <div class="action-row"><button id="addNames" class="btn primary">เพิ่มรายชื่อ</button><button id="shuffleNames" class="btn ghost">สลับลำดับ</button></div><div id="rosterList" class="roster-list"></div>
+      <div class="eyebrow kept-title">KEPT NAMES</div><h3>ชื่อที่เก็บไว้</h3><div id="keptList" class="kept-list"><span class="muted">ยังไม่มีชื่อที่เก็บไว้</span></div>
+      <div class="divider"></div><div class="eyebrow">QUICK FILL</div><button id="demoNames" class="btn ghost full">ใส่รายชื่อนักเตะตัวอย่าง 30 คน</button><p class="tiny">ชื่อที่สุ่มได้จะยังอยู่ในรายการ จนกว่าจะเลือก “ลบชื่อออกจากวงล้อ”</p>
+    </div>
+  </div>
+</section>
+</main>
+<footer>⚽ DRAFT DERBY <span>สร้างมาเพื่อความสนุกของคุณสองคน</span></footer>
+<script src="app.js"></script>
+</body></html>
